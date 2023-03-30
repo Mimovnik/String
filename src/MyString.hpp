@@ -3,9 +3,15 @@
 
 class MyString {
    private:
+    static const int MAX_READ_LENGTH = 128;
+
     char* content = nullptr;
 
     int length = 0;
+
+    static bool containsChar(const char* array, char contained);
+
+    char* trimmed(const char* array);
 
    public:
     MyString();
@@ -18,5 +24,9 @@ class MyString {
 
     MyString& operator=(const char* s);
 
-    friend std::ostream& operator<<(std::ostream& os, const MyString& str);
+    void trim();
+
+    static MyString readString(const char* endChars);
+
+    friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
 };
