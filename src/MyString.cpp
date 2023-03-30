@@ -38,20 +38,28 @@ MyString& MyString::operator=(const char* s) {
 }
 
 void MyString::trim() {
-    int whitespaces = 0;
+    int frontWhitespaces = 0;
     for (int i = 0; i < length; i++) {
         if (isspace(content[i])) {
-            whitespaces++;
+            frontWhitespaces++;
+        } else {
+            break;
         }
     }
 
-    int newLength = length - whitespaces;
-    char* newContent = new char[newLength];
-    for (int i = 0, newI = 0; i < length; i++) {
-        if (!isspace(content[i])) {
-            newContent[newI] = content[i];
-            newI++;
+    int backWhitespaces = 0;
+    for (int i = length - 1; i >= 0; i++) {
+        if (isspace(content[i])) {
+            backWhitespaces++;
+        } else {
+            break;
         }
+    }
+
+    int newLength = length - frontWhitespaces - backWhitespaces;
+    char* newContent = new char[newLength];
+    for (int i = 0; i < newLength; i++) {
+        newContent[i] = content[frontWhitespaces + i];
     }
     length = newLength;
     delete[] content;
