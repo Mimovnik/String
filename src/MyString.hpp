@@ -24,7 +24,11 @@ class MyString {
 
     MyString& operator=(const char* s);
 
+    MyString& operator=(MyString const& other);
+
     void trim();
+
+    bool equals(const char* s);
 
     static MyString readString(const char* endChars);
 
