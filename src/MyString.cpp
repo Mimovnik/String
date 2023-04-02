@@ -115,7 +115,7 @@ void MyString::trim() {
     }
 
     int backWhitespaces = 0;
-    for (int i = length - 1; i >= 0; i++) {
+    for (int i = length - 1; i >= 0; i--) {
         if (isspace(content[i])) {
             backWhitespaces++;
         } else {
@@ -125,13 +125,12 @@ void MyString::trim() {
 
     int newLength = length - frontWhitespaces - backWhitespaces;
     char* newContent = new char[newLength + 1];
-    for (int i = 0; i < newLength; i++) {
-        newContent[i] = content[frontWhitespaces + i];
-    }
+    copy(content + frontWhitespaces, newContent, newLength);
+    newContent[newLength] = '\0';
+
     length = newLength;
     delete[] content;
     content = newContent;
-    content[length] = '\0';
 }
 
 bool MyString::equals(const char* cstring) { return equals(content, cstring); }
