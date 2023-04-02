@@ -1,53 +1,106 @@
 #include "MyString.hpp"
 
-#include <cstring>
-
-bool MyString::containsChar(const char* array, char contained) {
-    for (int i = 0; i < strlen(array); i++) {
-        if (array[i] == contained) {
+bool MyString::containsChar(const char* cstring, char contained) {
+    for (int i = 0; i < getLength(cstring); i++) {
+        if (cstring[i] == contained) {
             return true;
         }
     }
     return false;
 }
 
-char* MyString::trimmed(const char* array) { return nullptr; }
+unsigned int MyString::getLength(const char* cstring) {
+    unsigned int length = 0;
+    while (*cstring != '\0') {
+        length++;
+        cstring++;
+    }
+    return length;
+}
 
-MyString::MyString() : MyString("") {}
+void MyString::copy(const char* source, char* destination,
+                    unsigned int length) {
+    for (int i = 0; i < length; i++) {
+        *destination = *source;
+        destination++;
+        source++;
+    }
+}
 
-MyString::MyString(const char* s) {
-    length = strlen(s);
+bool MyString::equals(const char* first, const char* second) {
+    unsigned int firstLength = getLength(first);
+    unsigned int secondLength = getLength(second);
+    if (firstLength != secondLength) {
+        return false;
+    }
+    for (int i = 0; i < firstLength; i++) {
+        if (first[i] != second[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+MyString::MyString() {
+    length = 0;
     content = new char[length + 1];
-    strcpy(content, s);
-    content[length] = '\0';
+    content[0] = '\0';
 }
 
-MyString::~MyString() { delete[] content; }
-
-MyString MyString::operator+(MyString const& other) {
-    return MyString(strcat(this->content, other.content));
+MyString::~MyString() {
+    length = 0;
+    delete[] content;
 }
-MyString& MyString::operator=(const char* s) {
-    int sLen = strlen(s);
-    if (length != sLen) {
+
+MyString::MyString(const MyString& other) {
+    unsigned int otherConentLength = getLength(other.content);
+    if (length != otherConentLength) {
         delete[] content;
-        length = sLen;
+        length = otherConentLength;
         content = new char[length + 1];
     }
-    std::copy(s, s + length, content);
-    content[length] = '\0';
+    copy(other.content, content, length + 1);
+}
+
+MyString& MyString::operator=(const MyString& other) {
+    unsigned int otherConentLength = getLength(other.content);
+    if (length != otherConentLength) {
+        delete[] content;
+        length = otherConentLength;
+        content = new char[length + 1];
+    }
+    copy(other.content, content, length + 1);
     return *this;
 }
 
-MyString& MyString::operator=(MyString const& other) {
-    int sLen = strlen(other.content);
-    if (length != sLen) {
+MyString::MyString(MyString&& other) {
+    char* tmp = content;
+    content = other.content;
+    other.content = tmp;
+}
+
+MyString& MyString::operator=(MyString&& other) {
+    char* tmp = content;
+    content = other.content;
+    other.content = tmp;
+    return *this;
+}
+
+MyString::MyString(const char* cstring) {
+    length = getLength(cstring);
+    content = new char[length + 1];
+    copy(cstring, content, length + 1);
+}
+
+MyString& MyString::operator=(const char* cstring) {
+    unsigned int cstringLength = getLength(cstring);
+    if (length != cstringLength) {
         delete[] content;
-        length = sLen;
+        length = cstringLength;
         content = new char[length + 1];
     }
-    std::copy(other.content, other.content + length, content);
-    content[length] = '\0';
+    copy(cstring, content, length + 1);
     return *this;
 }
 
@@ -81,7 +134,7 @@ void MyString::trim() {
     content[length] = '\0';
 }
 
-bool MyString::equals(const char* s) { return strcmp(content, s) == 0; }
+bool MyString::equals(const char* cstring) { return equals(content, cstring); }
 
 MyString MyString::readString(const char* endChars) {
     char input[MAX_READ_LENGTH];

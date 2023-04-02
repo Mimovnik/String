@@ -7,24 +7,33 @@ class MyString {
 
     char* content = nullptr;
 
-    int length = 0;
+    unsigned int length = 0;
 
     static bool containsChar(const char* array, char contained);
 
-    char* trimmed(const char* array);
+    static unsigned int getLength(const char* cstring);
+
+    static void copy(const char* source, char* destination,
+                     unsigned int length);
+
+    static bool equals(const char* first, const char* second);
 
    public:
     MyString();
 
-    MyString(const char* s);
-
     ~MyString();
 
-    MyString operator+(MyString const& other);
+    MyString(const MyString& other);
+
+    MyString& operator=(const MyString& other);
+
+    MyString(MyString&& other);
+
+    MyString& operator=(MyString&& other);
+
+    MyString(const char* s);
 
     MyString& operator=(const char* s);
-
-    MyString& operator=(MyString const& other);
 
     void trim();
 

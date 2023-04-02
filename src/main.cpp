@@ -3,9 +3,11 @@
 #include "MyString.hpp"
 
 int main() {
-    MyString word = MyString::readString(",;");
-    std::cout << "Your word is '" << word << "'" << std::endl;
-    word.trim();
-    std::cout << "Your trimmed word is '" << word << "'" << std::endl;
+    MyString empty;
+    MyString s1("kebab");
+    MyString s2(std::move(s1));
+    MyString s3;
+    s3 = s1; // copy
+    s3 = MyString("move assignment");
     return 0;
 }
