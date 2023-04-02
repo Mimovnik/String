@@ -3,8 +3,6 @@
 
 class String {
    private:
-    static const int MAX_READ_LENGTH = 128;
-
     char* content = nullptr;
 
     unsigned int length = 0;
@@ -39,7 +37,7 @@ class String {
 
     bool equals(const char* s);
 
-    static String readString(const char* endChars);
+    static String readString(const char* endChars, int maxReadLength = 64);
 
     friend std::ostream& operator<<(std::ostream& stream, const String& str);
 };

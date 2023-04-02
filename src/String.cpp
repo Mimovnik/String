@@ -136,10 +136,10 @@ void String::trim() {
 
 bool String::equals(const char* cstring) { return equals(content, cstring); }
 
-String String::readString(const char* endChars) {
-    char input[MAX_READ_LENGTH];
+String String::readString(const char* endChars, int maxReadLength) {
+    char* input = new char[maxReadLength];
     char c;
-    for (int i = 0; std::cin.good() && i < MAX_READ_LENGTH; i++) {
+    for (int i = 0; std::cin.good() && i < maxReadLength; i++) {
         c = getchar();
         if (containsChar(endChars, c)) {
             input[i] = '\0';
@@ -148,6 +148,7 @@ String String::readString(const char* endChars) {
         input[i] = c;
     }
     String s = String(input);
+    delete[] input;
     return s;
 }
 
