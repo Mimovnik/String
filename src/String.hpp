@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-class MyString {
+class String {
    private:
     static const int MAX_READ_LENGTH = 128;
 
@@ -19,27 +19,27 @@ class MyString {
     static bool equals(const char* first, const char* second);
 
    public:
-    MyString();
+    String();
 
-    ~MyString();
+    ~String();
 
-    MyString(const MyString& other);
+    String(const String& other);
 
-    MyString& operator=(const MyString& other);
+    String& operator=(const String& other);
 
-    MyString(MyString&& other);
+    String(String&& other);
 
-    MyString& operator=(MyString&& other);
+    String& operator=(String&& other);
 
-    MyString(const char* s);
+    String(const char* s);
 
-    MyString& operator=(const char* s);
+    String& operator=(const char* s);
 
     void trim();
 
     bool equals(const char* s);
 
-    static MyString readString(const char* endChars);
+    static String readString(const char* endChars);
 
-    friend std::ostream& operator<<(std::ostream& stream, const MyString& str);
+    friend std::ostream& operator<<(std::ostream& stream, const String& str);
 };

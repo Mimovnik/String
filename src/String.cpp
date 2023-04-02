@@ -1,6 +1,6 @@
-#include "MyString.hpp"
+#include "String.hpp"
 
-bool MyString::containsChar(const char* cstring, char contained) {
+bool String::containsChar(const char* cstring, char contained) {
     for (int i = 0; i < getLength(cstring); i++) {
         if (cstring[i] == contained) {
             return true;
@@ -9,7 +9,7 @@ bool MyString::containsChar(const char* cstring, char contained) {
     return false;
 }
 
-unsigned int MyString::getLength(const char* cstring) {
+unsigned int String::getLength(const char* cstring) {
     unsigned int length = 0;
     while (*cstring != '\0') {
         length++;
@@ -18,7 +18,7 @@ unsigned int MyString::getLength(const char* cstring) {
     return length;
 }
 
-void MyString::copy(const char* source, char* destination,
+void String::copy(const char* source, char* destination,
                     unsigned int length) {
     for (int i = 0; i < length; i++) {
         *destination = *source;
@@ -27,7 +27,7 @@ void MyString::copy(const char* source, char* destination,
     }
 }
 
-bool MyString::equals(const char* first, const char* second) {
+bool String::equals(const char* first, const char* second) {
     unsigned int firstLength = getLength(first);
     unsigned int secondLength = getLength(second);
     if (firstLength != secondLength) {
@@ -42,18 +42,18 @@ bool MyString::equals(const char* first, const char* second) {
     return true;
 }
 
-MyString::MyString() {
+String::String() {
     length = 0;
     content = new char[length + 1];
     content[0] = '\0';
 }
 
-MyString::~MyString() {
+String::~String() {
     length = 0;
     delete[] content;
 }
 
-MyString::MyString(const MyString& other) {
+String::String(const String& other) {
     unsigned int otherConentLength = getLength(other.content);
     if (length != otherConentLength) {
         delete[] content;
@@ -63,7 +63,7 @@ MyString::MyString(const MyString& other) {
     copy(other.content, content, length + 1);
 }
 
-MyString& MyString::operator=(const MyString& other) {
+String& String::operator=(const String& other) {
     unsigned int otherConentLength = getLength(other.content);
     if (length != otherConentLength) {
         delete[] content;
@@ -74,26 +74,26 @@ MyString& MyString::operator=(const MyString& other) {
     return *this;
 }
 
-MyString::MyString(MyString&& other) {
+String::String(String&& other) {
     char* tmp = content;
     content = other.content;
     other.content = tmp;
 }
 
-MyString& MyString::operator=(MyString&& other) {
+String& String::operator=(String&& other) {
     char* tmp = content;
     content = other.content;
     other.content = tmp;
     return *this;
 }
 
-MyString::MyString(const char* cstring) {
+String::String(const char* cstring) {
     length = getLength(cstring);
     content = new char[length + 1];
     copy(cstring, content, length + 1);
 }
 
-MyString& MyString::operator=(const char* cstring) {
+String& String::operator=(const char* cstring) {
     unsigned int cstringLength = getLength(cstring);
     if (length != cstringLength) {
         delete[] content;
@@ -104,7 +104,7 @@ MyString& MyString::operator=(const char* cstring) {
     return *this;
 }
 
-void MyString::trim() {
+void String::trim() {
     int frontWhitespaces = 0;
     for (int i = 0; i < length; i++) {
         if (isspace(content[i])) {
@@ -136,9 +136,9 @@ void MyString::trim() {
     content = newContent;
 }
 
-bool MyString::equals(const char* cstring) { return equals(content, cstring); }
+bool String::equals(const char* cstring) { return equals(content, cstring); }
 
-MyString MyString::readString(const char* endChars) {
+String String::readString(const char* endChars) {
     char input[MAX_READ_LENGTH];
     char c;
     for (int i = 0; std::cin.good() && i < MAX_READ_LENGTH; i++) {
@@ -149,11 +149,11 @@ MyString MyString::readString(const char* endChars) {
         }
         input[i] = c;
     }
-    MyString s = MyString(input);
+    String s = String(input);
     return s;
 }
 
-std::ostream& operator<<(std::ostream& stream, const MyString& str) {
+std::ostream& operator<<(std::ostream& stream, const String& str) {
     stream << str.content;
     return stream;
 }
