@@ -115,7 +115,7 @@ void String::trim() {
     }
 
     int backWhitespaces = 0;
-    for (int i = length - 1; i >= 0; i--) {
+    for (int i = length - 1; i >= frontWhitespaces; i--) {
         if (isspace(content[i])) {
             backWhitespaces++;
         } else {
@@ -123,7 +123,7 @@ void String::trim() {
         }
     }
 
-    int newLength = length - frontWhitespaces - backWhitespaces;
+    unsigned int newLength = length - frontWhitespaces - backWhitespaces;
     if (length == newLength) {
         return;
     }
