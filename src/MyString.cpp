@@ -124,6 +124,9 @@ void MyString::trim() {
     }
 
     int newLength = length - frontWhitespaces - backWhitespaces;
+    if (length == newLength) {
+        return;
+    }
     char* newContent = new char[newLength + 1];
     copy(content + frontWhitespaces, newContent, newLength);
     newContent[newLength] = '\0';
