@@ -37,7 +37,7 @@ class String {
 
     bool equals(const char* s);
 
-    static String readString(const char* endChars, int maxReadLength = 64);
+    static String readString(const char* endChars, int defaultReadLength = 64);
 
     friend std::ostream& operator<<(std::ostream& stream, const String& str);
 };

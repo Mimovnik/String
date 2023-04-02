@@ -18,8 +18,7 @@ unsigned int String::getLength(const char* cstring) {
     return length;
 }
 
-void String::copy(const char* source, char* destination,
-                    unsigned int length) {
+void String::copy(const char* source, char* destination, unsigned int length) {
     for (int i = 0; i < length; i++) {
         *destination = *source;
         destination++;
@@ -136,10 +135,18 @@ void String::trim() {
 
 bool String::equals(const char* cstring) { return equals(content, cstring); }
 
-String String::readString(const char* endChars, int maxReadLength) {
-    char* input = new char[maxReadLength];
+String String::readString(const char* endChars, int defaultReadLength) {
+    char* input = new char[defaultReadLength];
+    int readLength = defaultReadLength;
     char c;
-    for (int i = 0; std::cin.good() && i < maxReadLength; i++) {
+    for (int i = 0; std::cin.good(); i++) {
+        if (i >= readLength) {
+            readLength *= 2;
+            char* biggerInput = new char[readLength];
+            copy(input, biggerInput, i);
+            delete[] input;
+            input = biggerInput;
+        }
         c = getchar();
         if (containsChar(endChars, c)) {
             input[i] = '\0';
