@@ -54,20 +54,18 @@ String::~String() {
 }
 
 String::String(const String& other) {
-    unsigned int otherConentLength = getLength(other.content);
-    if (length != otherConentLength) {
+    if (length != other.length || other.length == 0) {
         delete[] content;
-        length = otherConentLength;
+        length = other.length;
         content = new char[length + 1];
     }
     copy(other.content, content, length + 1);
 }
 
 String& String::operator=(const String& other) {
-    unsigned int otherConentLength = getLength(other.content);
-    if (length != otherConentLength) {
+    if (length != other.length || other.length == 0) {
         delete[] content;
-        length = otherConentLength;
+        length = other.length;
         content = new char[length + 1];
     }
     copy(other.content, content, length + 1);

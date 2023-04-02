@@ -3,8 +3,7 @@
 #include "String.hpp"
 
 int main() {
-    String s1(" kebab ");
-    s1.trim();
-    s1.trim();
+    String s1;
+    String s2(s1);
     return 0;
 }
