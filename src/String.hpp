@@ -7,15 +7,6 @@ class String {
 
     unsigned int length = 0;
 
-    static bool containsChar(const char* array, char contained);
-
-    static unsigned int getLength(const char* cstring);
-
-    static void copy(const char* source, char* destination,
-                     unsigned int length);
-
-    static bool equals(const char* first, const char* second);
-
    public:
     String();
 
@@ -37,7 +28,16 @@ class String {
 
     bool equals(const char* s);
 
+    friend std::ostream& operator<<(std::ostream& stream, const String& str);
+
     static String readString(const char* endChars, int defaultReadLength = 64);
 
-    friend std::ostream& operator<<(std::ostream& stream, const String& str);
+    static bool containsChar(const char* cstring, char contained);
+
+    static unsigned int getLength(const char* cstring);
+
+    static void copy(const char* source, char* destination,
+                     unsigned int length);
+
+    static bool equals(const char* first, const char* second);
 };
